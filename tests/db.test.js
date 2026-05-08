@@ -18,6 +18,11 @@ import {
   insertLog,
 } from '../scripts/db.js'
 
+// 각 테스트 전에 mock 상태를 초기화해 테스트 간 상태 누출 방지
+beforeEach(() => {
+  supabase.from.mockReset()
+})
+
 describe('getConfig', () => {
   it('scraper_configs 테이블에서 첫 번째 설정을 반환한다', async () => {
     // 모의(mock) 데이터 준비

@@ -38,8 +38,9 @@ export async function getFields(configId) {
 
 // 필드 저장 - 기존 필드를 모두 삭제한 뒤 새 필드를 일괄 삽입
 export async function saveFields(configId, fields) {
-  // 기존 데이터 삭제
-  await supabase.from('scraper_fields').delete().eq('config_id', configId)
+  // 기존 데이터 삭제 - 실패 시 중복 삽입 방지를 위해 에러를 throw
+  const { error: deleteError } = await supabase.from('scraper_fields').delete().eq('config_id', configId)
+  if (deleteError) throw deleteError
 
   // 새로 추가할 필드가 없으면 종료
   if (fields.length === 0) return
