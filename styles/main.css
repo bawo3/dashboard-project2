@@ -1,0 +1,205 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #f5f6fa;
+  color: #2d3436;
+  min-height: 100vh;
+}
+
+/* 네비게이션 */
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  height: 56px;
+  background: #2d3436;
+  color: #fff;
+}
+
+.nav-brand {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.nav-links a {
+  color: #dfe6e9;
+  text-decoration: none;
+  margin-left: 24px;
+  font-size: 14px;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover {
+  color: #fff;
+}
+
+/* 페이지 공통 레이아웃 */
+.page {
+  max-width: 960px;
+  margin: 32px auto;
+  padding: 0 24px;
+}
+
+.page-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+/* 카드 컴포넌트 */
+.card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  margin-bottom: 24px;
+}
+
+/* 요약 수치 행 */
+.summary-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.summary-card {
+  flex: 1;
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  text-align: center;
+}
+
+.summary-card .label {
+  font-size: 13px;
+  color: #636e72;
+  margin-bottom: 8px;
+}
+
+.summary-card .value {
+  font-size: 28px;
+  font-weight: 700;
+  color: #2d3436;
+}
+
+/* 폼 그룹 */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #636e72;
+}
+
+.form-group input,
+.form-group select {
+  padding: 10px 12px;
+  border: 1px solid #dfe6e9;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #74b9ff;
+}
+
+/* 입력 필드 행 (동적 추가용) */
+.field-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.field-row input {
+  flex: 1;
+  padding: 8px 10px;
+  border: 1px solid #dfe6e9;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+/* 버튼 */
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn:hover { opacity: 0.85; }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-primary { background: #0984e3; color: #fff; }
+.btn-secondary { background: #dfe6e9; color: #2d3436; }
+.btn-danger { background: #d63031; color: #fff; }
+.btn-sm { padding: 6px 12px; font-size: 13px; }
+
+.btn-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+/* 로그 테이블 */
+.log-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.log-table th,
+.log-table td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.log-table th {
+  font-weight: 600;
+  color: #636e72;
+  background: #f8f9fa;
+}
+
+/* 상태 뱃지 */
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.badge-success { background: #d4efdf; color: #1e8449; }
+.badge-fail { background: #fadbd8; color: #c0392b; }
+
+/* 마지막 수집 시각 */
+.last-collected {
+  font-size: 13px;
+  color: #636e72;
+  margin-bottom: 16px;
+}
+
+/* 빈 상태 안내 */
+.empty-msg {
+  text-align: center;
+  color: #636e72;
+  padding: 40px 0;
+}
