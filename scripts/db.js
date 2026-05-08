@@ -2,6 +2,7 @@ import { supabase } from './supabase.js'
 
 // 설정 조회 - scraper_configs 테이블에서 가장 최근 1건을 가져옴
 export async function getConfig() {
+  if (!supabase) throw new Error('Supabase 미연결')
   const { data, error } = await supabase
     .from('scraper_configs')
     .select('*')
@@ -14,6 +15,7 @@ export async function getConfig() {
 
 // 설정 저장 - id가 있으면 수정(upsert), 없으면 새로 삽입
 export async function saveConfig({ id, url, buttonSelector, schedule }) {
+  if (!supabase) throw new Error('Supabase 미연결')
   const row = { url, button_selector: buttonSelector, schedule }
   if (id) row.id = id
 
@@ -28,6 +30,7 @@ export async function saveConfig({ id, url, buttonSelector, schedule }) {
 
 // 필드 목록 조회 - 특정 설정(configId)에 속한 필드 전체를 가져옴
 export async function getFields(configId) {
+  if (!supabase) throw new Error('Supabase 미연결')
   const { data, error } = await supabase
     .from('scraper_fields')
     .select('*')
@@ -38,14 +41,13 @@ export async function getFields(configId) {
 
 // 필드 저장 - 기존 필드를 모두 삭제한 뒤 새 필드를 일괄 삽입
 export async function saveFields(configId, fields) {
+  if (!supabase) throw new Error('Supabase 미연결')
   // 기존 데이터 삭제 - 실패 시 중복 삽입 방지를 위해 에러를 throw
   const { error: deleteError } = await supabase.from('scraper_fields').delete().eq('config_id', configId)
   if (deleteError) throw deleteError
 
-  // 새로 추가할 필드가 없으면 종료
   if (fields.length === 0) return
 
-  // DB에 저장할 형식으로 변환
   const rows = fields.map(f => ({
     config_id: configId,
     field_selector: f.selector,
@@ -56,7 +58,9 @@ export async function saveFields(configId, fields) {
 }
 
 // 문의 결과 조회 - 최근 7일간의 inquiry_results 데이터를 최신순으로 가져옴
+// Supabase 미연결 시 빈 배열 반환 (대시보드에서 sample.json 폴백 처리)
 export async function getInquiryResults() {
+  if (!supabase) return []
   const since = new Date()
   since.setDate(since.getDate() - 7)
 
@@ -70,7 +74,9 @@ export async function getInquiryResults() {
 }
 
 // 수집 로그 조회 - collection_logs 테이블에서 최근 20건을 최신순으로 가져옴
+// Supabase 미연결 시 빈 배열 반환
 export async function getLogs() {
+  if (!supabase) return []
   const { data, error } = await supabase
     .from('collection_logs')
     .select('*')
@@ -82,6 +88,7 @@ export async function getLogs() {
 
 // 수집 로그 삽입 - 실행 결과(성공/실패)와 메시지를 collection_logs에 기록
 export async function insertLog(configId, status, message) {
+  if (!supabase) throw new Error('Supabase 미연결')
   const { error } = await supabase
     .from('collection_logs')
     .insert({ config_id: configId, status, message })
