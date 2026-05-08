@@ -1,0 +1,25 @@
+{
+  "config": {
+    "url": "https://internal-system.example.com/inquiry",
+    "button_selector": "#btnSearch",
+    "schedule": "daily"
+  },
+  "fields": [
+    { "selector": "#startDate", "value": "2026-05-01" },
+    { "selector": "#endDate",   "value": "2026-05-08" }
+  ],
+  "inquiry_results": [
+    { "system_name": "ERP",      "count": 127 },
+    { "system_name": "CRM",      "count": 89  },
+    { "system_name": "HR",       "count": 45  },
+    { "system_name": "그룹웨어",  "count": 63  },
+    { "system_name": "ERP(재무)", "count": 38  },
+    { "system_name": "전자결재",  "count": 54  }
+  ],
+  "logs": [
+    { "status": "success", "message": "6개 시스템, 총 416건 수집" },
+    { "status": "success", "message": "6개 시스템, 총 398건 수집" },
+    { "status": "fail",    "message": "내부 시스템 응답 오류: HTTP 503" },
+    { "status": "success", "message": "6개 시스템, 총 421건 수집" }
+  ]
+}
