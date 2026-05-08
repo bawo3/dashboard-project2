@@ -1,5 +1,6 @@
 import Chart from 'chart.js/auto'
 import { getInquiryResults } from './db.js'
+import sampleData from '../data/sample.json'
 
 // 이전에 생성된 차트 인스턴스 (중복 생성 방지)
 let chartInstance = null
@@ -50,13 +51,38 @@ export async function renderDashboard() {
     </div>
   `
 
-  const results = await getInquiryResults()
+  // Supabase 연결 실패 또는 데이터 없을 때 sample.json 폴백 사용
+  let results = []
+  let isSample = false
+  try {
+    results = await getInquiryResults()
+  } catch {
+    results = []
+  }
+
+  if (results.length === 0) {
+    results = sampleData.inquiry_results.map(r => ({
+      system_name: r.system_name,
+      count: r.count,
+      collected_at: new Date().toISOString(),
+    }))
+    isSample = true
+  }
+
   const aggregated = aggregateBySystem(results)
 
   if (aggregated.length === 0) {
     document.getElementById('empty-msg').style.display = 'block'
     document.getElementById('chart-card').style.display = 'none'
     return
+  }
+
+  // 샘플 데이터 사용 중임을 상단에 안내 표시
+  if (isSample) {
+    const notice = document.createElement('p')
+    notice.style.cssText = 'font-size:13px;color:#e17055;margin-bottom:12px'
+    notice.textContent = '⚠️ 샘플 데이터 표시 중 — Supabase 연결 후 실제 데이터가 나타납니다.'
+    document.querySelector('.summary-row').before(notice)
   }
 
   document.getElementById('total-count').textContent = calcTotal(aggregated).toLocaleString()
